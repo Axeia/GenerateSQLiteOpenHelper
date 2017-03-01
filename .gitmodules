@@ -1,0 +1,3 @@
+[submodule "PHP-SQL-Parser"]
+	path = PHP-SQL-Parser
+	url = https://github.com/greenlion/PHP-SQL-Parser
