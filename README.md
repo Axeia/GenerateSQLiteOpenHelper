@@ -1,3 +1,5 @@
+[Click for a live demo](http://monsterhunters.duckdns.org:9998/example.php)
+
 ![Screenshot of the example file to clarify what it does](https://puu.sh/upZn7/8cdc74509c.png)
 #How to use
 Please note that this project uses the [PHPSQLParser](https://github.com/greenlion/PHP-SQL-Parser) which is not included if you click the download zip button on github.
