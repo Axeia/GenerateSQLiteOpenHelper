@@ -1,8 +1,14 @@
 <?php
 $currentFolder = __DIR__.'/';
-spl_autoload_register(function ($className) {
+spl_autoload_register(function ($className) 
+{
     global $currentFolder;
-    include $currentFolder.str_replace('\\', '/', $className).'.php';
+    if(strpos($className, '\\') !== false)  
+    {
+        $classPath = str_replace('PHPSQLParser\\', 'PHP-SQL-Parser/src/PHPSQLParser/', $className);
+        $classPath = $currentFolder.str_replace('\\', '/', $classPath);
+        include $classPath.'.php';
+    }
 });
 include($currentFolder.'GenerateSQLiteOpenHelper.class.php');
 
@@ -30,18 +36,18 @@ CREATE TABLE AlbumTracks(
     FOREIGN KEY(album_id) REFERENCES Albums(id),
     FOREIGN KEY(song_id)  REFERENCES Songs(id)
 );';
-$className = isset($_POST['class_name']) ?  trim($_POST['class_name']) : 'MyAppDbHelper';
-$dbName = isset($_POST['db_name']) ? trim($_POST['db_name']) : 'main.sqlite';
+$className = isset($_POST['class_name']) 
+    ?  trim($_POST['class_name']) 
+    : 'MyAppDbHelper';
+$dbName = isset($_POST['db_name']) 
+    ? trim($_POST['db_name']) 
+    : 'main.sqlite';
 if(isset($_POST['ddl-sql']))
 {
     $sql = $_POST['ddl-sql'];
 }
 
-$creates = file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'creates.sql');
-$uniqueTypes = [];
-
 $sqliteOpenHelper = new GenerateSQLiteOpenHelper($sql, $className, $dbName);
-
 
 ?><!doctype html>
 <html class="no-js" lang="">
@@ -138,17 +144,13 @@ $sqliteOpenHelper = new GenerateSQLiteOpenHelper($sql, $className, $dbName);
                 margin: 0 auto;
                 text-align: center;
             }
-            @media (min-width:1700px) { 
+            @media (min-width:1400px) { 
                 #ddl, #output{ width: 48%; float: left; }
                 #output{ float: right; }
                 .ace_editor{
                     height: calc(100vh - 250px);
                 }
             } 
-            #footnote{
-                background: #A4DDED;
-                color: #000;
-            }
         </style>
     </head>
     <body>
@@ -184,21 +186,9 @@ echo $sqliteOpenHelper->getJavaString();?>
             </textarea>        
         </div>
         <p id="credits">
-            Makes use of <a href='https://ace.c9.io/'>Ace embeddable editor</a> for syntax highlighting and the <a href='https://github.com/greenlion/PHP-SQL-Parser'>PHP-SQL-Parser</a> to generate the SQLite classes.
+            Makes use of <a href='https://ace.c9.io/'>Ace embeddable editor</a> for syntax highlighting. Also uses the <a href="https://github.com/Axeia/GenerateSQLiteOpenHelper">GenerateSQLiteOpenHelper</a> project which in turn uses <a href='https://github.com/greenlion/PHP-SQL-Parser'>PHP-SQL-Parser</a>.
             Enjoy!
         </p>
-        <div id="footnote">
-            <p>
-                Please note that the code is not very robust and far from perfect to handle a lot of different cases. Things to keep in mind that have the biggest chance of not breaking it and ending up with a usable android class are:
-            </p>
-            <ul>
-                <li>Table and column names <strong>are case-sensitive</strong>. The code will start throwing error if you refer to column `id` as `ID`.</li>
-                <li>Be consistent in backtick usage, either use them or don't when refering to the same table and or columns.</li>
-                <li>Define foreign and composite primary keys after the columns within the same create table statement.</li>
-                <li>Splitting of the tables is done on semi-colons, so don't use those anywhere else</li>
-                <li>Indexes haven't been tested.</li>
-            </ul>
-        </div>
         <script src="https://cdn.jsdelivr.net/ace/1.2.6/min/ace.js"></script>
         <script>
             var editorDDL = ace.edit("ddl-sql");
