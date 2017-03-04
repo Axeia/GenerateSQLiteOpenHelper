@@ -1,14 +1,16 @@
-[Click for a live demo](http://monsterhunters.duckdns.org:9998/example.php)
+# Live Demo
+If all you're interested in is generating your Java class based off SQL create statement then just click the live Demo link and you're off to the races :)
+#[live demo](http://monsterhunters.duckdns.org:9998/example.php)
 
 ![Screenshot of the example file to clarify what it does](https://puu.sh/upZn7/8cdc74509c.png)
-#How to use
+#How to run this yourself?
 Please note that this project uses the [PHPSQLParser](https://github.com/greenlion/PHP-SQL-Parser) which is not included if you click the download zip button on github.
 In order to obtain it:
 * Go to [its own github page](https://github.com/greenlion/PHP-SQL-Parser) and download it and place the `PHP-SQL-Parser` folder inside the  :file_folder: folder of wherever you have unzipped this project.
 
 or
 * Download this project via git like so (the recurisve parameter does the magic of including sub-repositories): 
-```
+```cmd
 git clone --recursive https://github.com/Axeia/GenerateSQLiteOpenHelper
 ```
 
