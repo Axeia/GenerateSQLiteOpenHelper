@@ -12,6 +12,7 @@ spl_autoload_register(function ($className)
 });
 include($currentFolder.'GenerateSQLiteOpenHelper.class.php');
 
+//Default SQL is none is given in the form.
 $sql = '/** Sample SQL. **/
 CREATE TABLE Albums(
    id           INT     NOT NULL,
@@ -36,12 +37,15 @@ CREATE TABLE AlbumTracks(
     FOREIGN KEY(album_id) REFERENCES Albums(id),
     FOREIGN KEY(song_id)  REFERENCES Songs(id)
 );';
+//Set classname 
 $className = isset($_POST['class_name']) 
     ?  trim($_POST['class_name']) 
     : 'MyAppDbHelper';
+//Set database name
 $dbName = isset($_POST['db_name']) 
     ? trim($_POST['db_name']) 
     : 'main.sqlite';
+//Set SQL to form value if it's given.
 if(isset($_POST['ddl-sql']))
 {
     $sql = $_POST['ddl-sql'];
@@ -147,16 +151,18 @@ $sqliteOpenHelper = new GenerateSQLiteOpenHelper($sql, $className, $dbName);
             @media (min-width:1400px) { 
                 #ddl, #output{ width: 48%; float: left; }
                 #output{ float: right; }
-                .ace_editor{
+                .ace_editor, #ddl-sql, #sqlitehelper{
+                    height: 700px;
                     height: calc(100vh - 250px);
+                    width: 100%;
+                    color: #e6db74;
                 }
             } 
         </style>
     </head>
     <body>
         <h1>Generated SQLiteOpenHelper Helper</h1>
-        <hr/>
-        
+        <hr/>        
         <form id="ddl" method="POST">
             <h2>Create Statements <abbr title="Data Definition Language">(DDL)</h2>
             <p>Please note that no validating/correcting is done, so please make sure to enter valid SQL.</p>
@@ -181,8 +187,7 @@ $sqliteOpenHelper = new GenerateSQLiteOpenHelper($sql, $className, $dbName);
         <div id="output">
             <h2>Android SQLiteOpenHelper</h2>
             <p>Just copy &amp; paste into Android Studio's file tree</p>
-            <textarea id="sqlitehelper"><?php
-echo $sqliteOpenHelper->getJavaString();?>
+            <textarea id="sqlitehelper"><?php echo $sqliteOpenHelper->getJavaString();?>
             </textarea>        
         </div>
         <p id="credits">
