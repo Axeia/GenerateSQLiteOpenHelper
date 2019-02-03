@@ -9,7 +9,7 @@ In order to obtain it:
 * Go to [its own github page](https://github.com/greenlion/PHP-SQL-Parser) and download it and place the `PHP-SQL-Parser` folder inside the  :file_folder: folder of wherever you have unzipped this project.
 
 or
-* Download this project via git like so (the recurisve parameter does the magic of including sub-repositories): 
+* Download this project via git like so (the recursive parameter does the magic of including sub-repositories): 
 ```cmd
 git clone --recursive https://github.com/Axeia/GenerateSQLiteOpenHelper
 ```
