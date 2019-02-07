@@ -1,0 +1,167 @@
+
+html, body{
+    margin: 0; 
+    padding: 0;
+}
+body {
+    background-color: rgb(32, 32, 32);
+    background-image: linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black), 
+    linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black), 
+    linear-gradient(to bottom, rgb(8, 8, 8), rgb(32, 32, 32));
+    background-size: 10px 10px, 10px 10px, 10px 5px;
+    background-position: 0px 0px, 5px 5px, 0px 0px;
+    color: #ddd;
+    font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+    padding: 0;
+    position: relative;
+}
+h1, h2{
+    letter-spacing: 1px;
+    text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.5);
+    margin: 0;
+    padding: 0;
+    height: 2rem;
+    line-height: 2rem;
+    font-size: 1.5rem;
+    clear: both;
+    text-align: center;
+}
+#output-for{
+    position: absolute;
+    top: 0;
+    right: 0;
+}      
+pre{
+    width: 100%;
+}            
+.sql{
+    overflow: auto;
+    border: 1px #cecece solid ;
+}
+.creates{
+}
+abbr{
+    cursor: help;
+}
+input, textarea{
+    background: #272822;
+    border: 0;
+    color: #ddd;
+}
+textarea{                
+    min-width: 500px;
+    min-height: 300px;
+    display: block;
+}
+a{
+    color: #e6db74;
+}
+table {
+    margin-bottom: 3rem;
+}
+table th{                
+    white-space: nowrap;
+    text-align: right;
+}
+table td{
+    width: 90%;
+}
+table td[rowspan="2"]{
+    width: 100px;
+    height: 2.4rem;
+}
+table button{
+    display: inline-block;
+    height: 2.8rem;
+    width: 100%;
+    height: 100%;
+    margin-top: -1px;
+}
+table button, #credits button{
+    border: 1px solid #fff;
+    font-weight: bold;
+    background: #559A0D;
+    color: #fff;
+
+}
+table input[type="text"]{
+    width: 100%;
+    height: 1.4rem;
+    border: 1px solid #2F3129;
+    color: #fff;
+}
+p{
+    margin: 0.2rem 0;
+    padding: 0.4rem;
+    font-size: 0.9rem;
+}ext-align: center;
+}
+.splitter-container+h1{
+    padding-top: 1rem;
+    clear: both;
+}
+
+@media (min-width:1400px) { 
+    .splitter-container{ width: 50%; float: left; }
+    .splitter-container+.splitter-container{ float: right; }
+    .ace_editor{
+        height: 350px;
+        height: calc(50vh - 6.5rem);
+        width: 100%;
+        color: #e6db74;
+    }
+} 
+
+.tabbed{
+    background: #2d2d2d;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    border-left: 1px solid #252526;
+    border-right: 1px solid #252526;
+    color: #626262;
+    cursor: pointer;
+}
+.tabbed.active{
+    background: #1e1e1e;
+    color: #8f8f8f;
+}
+#laravel-creates, #laravel-inserts{
+    width: 50%;
+    display: inline-block;
+}
+
+#tab-bar-after{
+    text-align: right;
+}
+.tab-header{
+    display: inline-block;
+}
+.tab-bar{
+    clear: both;
+}
+
+.ace_editor{
+    margin: 0;
+}
+
+#credits{
+    text-align: center;
+}
+#credits button{
+    position: absolute;
+    margin: 0 auto;
+    padding: 0.3rem 0.5rem;
+    bottom: 0.7rem;
+}
+#credits p{
+    margin-top: 1rem;
+}
+#optional{
+    height: 50vh;
+    clear: both;
+}
+code{
+    background: #333;
+    padding: 0.2rem;
+    outline: #ddd;
+}

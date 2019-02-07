@@ -1,26 +1,26 @@
-# Live Demo
-If all you're interested in is generating your Java class based off SQL create statement then just click the live Demo link and you're off to the races :)
-#[live demo](http://monsterhunters.duckdns.org:9998/example.php)
 
-![Screenshot of the example file to clarify what it does](https://puu.sh/upZn7/8cdc74509c.png)
-#How to run this yourself?
-Please note that this project uses the [PHPSQLParser](https://github.com/greenlion/PHP-SQL-Parser) which is not included if you click the download zip button on github.
-In order to obtain it:
-* Go to [its own github page](https://github.com/greenlion/PHP-SQL-Parser) and download it and place the `PHP-SQL-Parser` folder inside the  :file_folder: folder of wherever you have unzipped this project.
+# Project is dead
 
-or
-* Download this project via git like so (the recursive parameter does the magic of including sub-repositories): 
-```cmd
-git clone --recursive https://github.com/Axeia/GenerateSQLiteOpenHelper
-```
+As a follow up to having revived this project I shall now put an end to this particular one. The code became a mess trying to make it do 2 things whilst I only use it for one.
+Also the parsing of the SQL is quite slow so I'm going to start afresh for my Laravel (and thus not Android) needs.
 
-#Who is it for?
-Anyone that plans on creating a database, just paste your SQL create statements, run the code and you're presented with a class you copy&paste into your Android project.
-
-#Bugs 
-As I whipped this up mostly for myself but then figured I might as well share it and save other folks some time this is not the most polished product.
-* :bug: Creating an index inside the create statement not part of the initial column definition will most likely get ignored.
-* :beetle: Case sensitivity, please note that defining a column as for example `id INT NOT NULL` (lowercase 'id') and then later on trying to do `PRIMARY KEY(ID)` (uppercase 'ID') will fail to produce a proper class.
-* :bug: Quotes/backtick usage, consistency is the name of the game. If you choose to use these then always use them or don't use them at all or the code won't parse.
-  * Quotes might actually fail to produce proper Java-code as they're probably not escaped
-* :beetle: Don't have semicolons in the SQL Create statements anywhere but at the end of the createstatement. Splitting of the table code is done extremely simple by considering the semicolon as the seperator character. 
+## PokemonGoDB
+PokemonGoDB is an attempt at turning the gamedata of interest from Pokémon Go into a Database. Previously I had some interest in doing this for the purposes of an Android app
+but due to Niantic cracking down on map apps and thus the use of my app I stopped development on that.
+I am however now working on a Laravel based website for which I'll need the same data and thus have revived this project.
+## What's the aim of this project?
+For my own use for now the aim is to have a database with the data of the Pokémon in it. Possibly in the future this may be expanded upon to include calculating moveset dps etc etc.
+## How does it work?
+The [pogo-game-master-decoder](https://github.com/apavlinovic/pogo-game-master-decoder) project is at the base of the project although that's a completely seperate project not made or maintained by me. It takes the games master file and converts it into the [protobuf format](https://developers.google.com/protocol-buffers/)
+  1. A datafile as output by the pogo-game-master-decoder is converted to JSON using several regular expressions.
+  2. SQL insert statements are created based on the JSON file generated in step 1.
+  3. Here we branch off between the new and old usage.
+     1. Laravel
+        - A laravel migration file is generated. 
+        - A laravel seeder file is generated.
+     2. Android (old and basically abandoned by me)
+        - An Android SQLiteOpenHelper class is generated based of the create statements.
+        - * The [GenerateSQLiteOpenHelper](https://github.com/Axeia/GenerateSQLiteOpenHelper) project is used for this, that project is maintained (well not really anymore) and created by me. 
+            It's simply split off from this one as I thought more people have an use for it.
+            XML string elements are generated based off the JSON to be used in your Android projects strings file containing the names of the Pokémon.
+           

@@ -1,0 +1,128 @@
+<?php 
+    include_once(__DIR__.'/../LaravelInsertParser.class.php');
+    $laravelFileGenerator = new GenerateLaravelFiles($creates);
+    $laravelInsertParser = new laravelInsertParser($insertTypeQuery.$insertPokemonQuery.$insertPokemonImagesQuery);
+?>
+<form id="optional" method="POST" action="">
+<h1>Laravel Specific</h1>
+
+<?php echo $laravelFileGenerator->getMigrationString(); ?>
+
+<?php echo $laravelInsertParser->getSeederString(); ?>
+
+<script>
+    var bottomhalf = document.getElementById('optional');
+    var tabheaders = bottomhalf.getElementsByClassName('tab-header');
+    
+    var createsEditorDiv = document.getElementById('laravel-creates');
+    var insertsEditorDiv = document.getElementById('laravel-inserts');
+
+    var editorLaravelCreates = ace.edit('laravel-creates');
+    editorLaravelCreates.setTheme('ace/theme/monokai');
+    editorLaravelCreates.getSession().setMode('ace/mode/php');
+
+    var editorLaravelInserts = ace.edit('laravel-inserts');
+    editorLaravelInserts.setTheme('ace/theme/monokai');
+    editorLaravelInserts.getSession().setMode('ace/mode/php');
+
+    var divBeforeTabs = document.createElement('div');
+    createsEditorDiv.before(divBeforeTabs);
+    divBeforeTabs.id = 'tab-bar-before';
+    divBeforeTabs.classList.add('tab-bar');
+    var divAfterTabs = document.createElement('div');
+    divAfterTabs.id = 'tab-bar-after';
+    divAfterTabs.classList.add('tab-bar');
+    insertsEditorDiv.after(divAfterTabs);
+
+    var createTableSessions = {};
+    var insertTableSessions = {};
+
+    for(var i = 0; i < tabheaders.length; i++)
+    {
+        var idOfCreates = 'tab-content-creates-'+tabheaders[i].id.substring(18);
+        var idOfInserts = 'tab-content-inserts-'+tabheaders[i].id.substring(18);
+        var insertTabHeader = document.getElementById(
+            'tab-title-inserts-'+tabheaders[i].id.substring(18)
+        );
+        console.log('tab-title-inserts-'+tabheaders[i].id.substring(18));
+
+        if(i === 0)
+        {
+            tabheaders[i].classList.add('active');
+            insertTabHeader.classList.add('active');
+            editorLaravelCreates.getSession().setValue(document.getElementById(idOfCreates).value);
+            editorLaravelInserts.getSession().setValue(document.getElementById(idOfInserts).value);
+            createTableSessions['current_session_id'] = tabheaders[i].id.substring(10);
+            insertTableSessions['current_session_id'] = tabheaders[i].id.substring(10);
+        }
+
+        divBeforeTabs.appendChild(tabheaders[i]);
+        divAfterTabs.appendChild(insertTabHeader);
+
+        document.getElementById(idOfCreates).style.display = 'none';
+        document.getElementById(idOfInserts).style.display = 'none';
+
+        tabheaders[i].classList.add('tabbed');
+        tabheaders[i].addEventListener('click', function(e)
+        {
+            var sessionId = this.id.substring(18);
+
+            //Clicking already focused tab = do nothing.
+            if(createTableSessions.current_session_id === sessionId)
+            {
+                //console.log('already in session ''+sessionId+''');
+                return;
+            }
+            else
+            {
+                //Save current session
+                editorLaravelCreates[createTableSessions.current_session_id] = editorLaravelCreates.getSession();
+                editorLaravelInserts[createTableSessions.current_session_id] = editorLaravelInserts.getSession();
+
+                //Remove active class from tab.
+                var elems = bottomhalf.querySelectorAll('.active');
+                elems.forEach.call(elems, function(el) {
+                    el.classList.remove('active');
+                });
+
+                if(createTableSessions[sessionId])
+                {
+                    //Restore saved other tabs session
+                    editorLaravelCreates.setSession(createTableSessions[sessionId]);
+                    editorLaravelInserts.setSession(insertTableSessions[sessionId]);
+                }
+                //first time this tab is clicked / create session
+                else
+                {
+                    this.classList.add('active');
+                    insertTabHeader.classList.add('active');
+
+                    var targetCreatesId = 'tab-content-creates-'+sessionId;
+                    var targetInsertsId = 'tab-content-inserts-'+sessionId;
+
+                    var newSessionCreate = ace.createEditSession(
+                        document.getElementById(targetCreatesId).value,
+                        'ace/mode/php'
+                    );
+                    editorLaravelCreates.setSession(newSessionCreate);
+
+                    var newSessionInsert = ace.createEditSession(
+                        document.getElementById(targetInsertsId).value,
+                        'ace/mode/php'
+                    );
+                    editorLaravelInserts.setSession(newSessionInsert);
+                }
+
+                //Save tab as current session.
+                createTableSessions.current_session_id = sessionId;
+            }
+        });
+    }
+</script>
+
+<div id='credits'>
+    <input type="hidden" name="output" value="Laravel"/>
+    <button name="Download" value="">Download .zip</button>
+    <p>Recommended to run <code>composer dump-autoload</code> before running <code>php artisan migrate:refresh --seed</code> or you may get the error <q>Class ???TableSeeder does not exist</q>  </p>
+</div>
+</form>

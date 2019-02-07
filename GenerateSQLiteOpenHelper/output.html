@@ -1,0 +1,27 @@
+<?php 
+    $sqliteOpenHelper = new GenerateSQLiteOpenHelper($creates, 'MyAppDbHelper', '    ', 'PogoDB');
+?>
+<h1>Android Specific</h1>
+<hr/>
+
+<div class="splitter-container">
+    <h2>Android SQLiteOpenHelper</h2>
+    <p>Android SQLiteOpenHelper class, just copy&amp;paste</p>
+    <textarea id="sqlitehelper"><?php echo $sqliteOpenHelper->getJavaString();?></textarea>
+</div>
+
+<div class="splitter-container">
+    <h2>Android Strings (XML)</h2>
+    <p>XML to be used in your Android projects Strings xml file</p>
+    <textarea id="strings"><?php echo $stringsForAndroid ?></textarea>
+</div>
+
+<script>
+    var editorSQLiteHelper = ace.edit("sqlitehelper");
+    editorSQLiteHelper.setTheme("ace/theme/monokai");
+    editorSQLiteHelper.getSession().setMode("ace/mode/java");    
+    
+    var editorSQLiteHelper = ace.edit("strings");
+    editorSQLiteHelper.setTheme("ace/theme/monokai");
+    editorSQLiteHelper.getSession().setMode("ace/mode/xml");          
+</script>
